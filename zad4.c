@@ -40,6 +40,10 @@ int main() {
 	ResultMultiply(&Multiplication, &head1, &head2);
   	PrintPoly("Result of addition is: ", Addition.next);
 	PrintPoly("Result of multiplication is: ", Multiplication.next);
+	FreeMemory(&head1);
+	FreeMemory(&head2);
+	FreeMemory(&Addition);
+	FreeMemory(&Multiplication);
   	return EXIT_SUCCESS;
 }
 int ReadFile(Position head1, Position head2, char* fileName) {
