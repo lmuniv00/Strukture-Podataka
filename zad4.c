@@ -24,6 +24,7 @@ int PrintPoly(char* name, Position first);
 int ResultAdd(Position Addition, Position head1, Position head2);
 int CreateAndInsertAfter(int coefficient, int exponent, Position position);
 int ResultMultiply(Position Multiplication, Position head1, Position head2);
+int FreeMemory(Position head);
 
 int main(int argc, char** argv) {
 	Element head1 = { .coefficient = 0, .exponent = 0, .next = NULL };
