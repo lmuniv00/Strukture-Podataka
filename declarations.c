@@ -91,8 +91,9 @@ int CalculatePostfixFile(double* destination, char* fileName) {
 	char* currentBuffer = NULL;
 	int numBytes = 0;
 	char operation = 0;
-	double number = 0;
+	int number = 0;
 	int status = 0;
+	StackElement head = { .next = NULL, .number = 0 };
 	file = fopen(fileName, "rb");
 	if (!file) {
 		perror("Can't open file!\n");
@@ -113,21 +114,40 @@ int CalculatePostfixFile(double* destination, char* fileName) {
 	while (strlen(currentBuffer > 0)) {
 		status = sscanf(currentBuffer, " %lf %n", &number, &numBytes);
 		if (status == 1) {
-			Push(&head, number);
+			status = Push(&head, number);
+			if (status != EXIT_SUCCESS) {
+				free(buffer);
+				DeleteAll(&head);
+				return -3;
+			}
 			currentBuffer += numBytes;
 		}
 		else {
-			status = sscanf(currentBuffer, " %c %n", &operation, &numBytes);
-			PerformOperation(&head, operation);
+			sscanf(currentBuffer, " %c %n", &operation, &numBytes);
+			status = PerformOperation(&head, operation);
 			if (status != EXIT_SUCCESS) {
 				free(buffer);
-				while (head.next != 0)
-					DeleteAfter(&head);
+				DeleteAll(&head);
 				return -1;
 			}
 			currentBuffer += numBytes;
 		}
 	}
 	free(buffer);
+	status = Pop(resultDestination, &head);
+	if (status != EXIT_SUCCESS) {
+		DeleteAll(&head);
+		return -5;
+	}
+	if (head.next) {
+		printf("Postfix not valid! Please check your file!\n");
+		DeleteAll(&head);
+		return -6;
+	}
+	return EXIT_SUCCESS;
+}
+int DeleteAll(Position head) {
+	while (head->next)
+		DeleteAfter(head);
 	return EXIT_SUCCESS;
 }
