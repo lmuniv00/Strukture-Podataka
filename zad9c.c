@@ -90,7 +90,7 @@ int Print(Position current, FILE* fp) {
 	if(!current)
 		return EXIT_SUCCESS;
 	printf("%d ", current->num);
-  fprintf(fp, "%d ", current->num);
+  	fprintf(fp, "%d ", current->num);
 	Print(current->left, fp);
 	Print(current->right, fp);
 	return EXIT_SUCCESS;
