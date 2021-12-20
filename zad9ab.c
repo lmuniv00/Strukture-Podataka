@@ -24,6 +24,7 @@ int main(void) {
 	printf("1 -> Create new element\n2 -> Print current tree\n"
 	"3 -> Replace all elements with sum\n4 -> Exit program\n");
 	while(status) {
+		printf("Your choice: ");
 		scanf("%d", &Choice);
 		switch(Choice) {
 			case (1):
@@ -33,12 +34,18 @@ int main(void) {
 				current = Insert(q, current);
 				break;
 			case (2):
+				printf("\nTree printed!\n");
 				Print(current);
+        			printf("\n");
 				break;
 			case (3):
+				printf("\nElements replaced with their sums!\n");
 				Replace(current);
+        			Print(current);
+        			printf("\n");
 				break;
 			case (4):
+				printf("Exiting program...\n");
 				status--;
 				break;
 			default:
